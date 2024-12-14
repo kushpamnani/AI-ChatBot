@@ -13,6 +13,7 @@ import { IonicModule } from '@ionic/angular';
 export class ChatPage {
   messages: any[] = [];
   newMessage: string = '';
+  loading: boolean = false;
 
   constructor() {}
 
@@ -26,15 +27,18 @@ export class ChatPage {
       timestamp: new Date()
     });
 
+    const userMessage = this.newMessage;
+    this.newMessage = '';
+    this.loading = true;
+
     // Simulate AI response
     setTimeout(() => {
       this.messages.push({
-        content: `You said: ${this.newMessage}`,
+        content: `You said: ${userMessage}`,
         role: 'assistant',
         timestamp: new Date()
       });
+      this.loading = false;
     }, 1000);
-
-    this.newMessage = '';
   }
 }
